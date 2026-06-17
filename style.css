@@ -222,12 +222,211 @@ body {
 }
 
 /* ============================================
+   GALLERY SECTION
+   ============================================ */
+
+.gallery-section {
+    padding: 80px 0;
+    background: var(--secondary-color);
+}
+
+.gallery-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    text-align: center;
+    margin-bottom: 3rem;
+    font-weight: 300;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+}
+
+.gallery-item {
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.gallery-image-wrapper {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    aspect-ratio: 1.25;
+    background: var(--light-bg);
+    box-shadow: 0 5px 20px rgba(21, 19, 63, 0.08);
+}
+
+.gallery-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.gallery-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(21, 19, 63, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: var(--transition);
+}
+
+.gallery-item:hover .gallery-image {
+    transform: scale(1.1);
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-overlay h3 {
+    color: var(--secondary-color);
+    font-size: 1.5rem;
+    text-align: center;
+    animation: slideInUp 0.4s ease-out;
+}
+
+/* ============================================
+   TEAM SECTION
+   ============================================ */
+
+.team-section {
+    padding: 80px 0;
+    background: var(--light-bg);
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2.5rem;
+    margin-top: 3rem;
+}
+
+.team-member {
+    text-align: center;
+    animation: fadeInUp 0.8s ease-out;
+    transition: var(--transition);
+}
+
+.team-member:hover {
+    transform: translateY(-10px);
+}
+
+.team-member-image {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    margin-bottom: 1.5rem;
+    aspect-ratio: 1;
+    box-shadow: 0 10px 30px rgba(21, 19, 63, 0.12);
+}
+
+.team-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.team-member:hover .team-image {
+    transform: scale(1.1);
+}
+
+.team-info h3 {
+    font-size: 1.3rem;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.team-info p {
+    color: var(--accent-color);
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+/* ============================================
+   SERVICES SECTION
+   ============================================ */
+
+.services-section {
+    padding: 80px 0;
+    background: var(--secondary-color);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2.5rem;
+    margin-top: 3rem;
+}
+
+.service-card {
+    background: var(--light-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 20px rgba(21, 19, 63, 0.08);
+    transition: var(--transition);
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(21, 19, 63, 0.15);
+    border-top: 4px solid var(--accent-color);
+}
+
+.service-image {
+    position: relative;
+    overflow: hidden;
+    height: 200px;
+    background: var(--primary-color);
+}
+
+.service-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.service-card:hover .service-img {
+    transform: scale(1.1);
+}
+
+.service-content {
+    padding: 2rem;
+}
+
+.service-content h3 {
+    font-size: 1.4rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.service-content p {
+    color: #666;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* ============================================
    MISSION & VISION SECTION
    ============================================ */
 
 .mission-vision {
     padding: 80px 0;
-    background: var(--secondary-color);
+    background: var(--light-bg);
 }
 
 .mission-vision-wrapper {
@@ -238,7 +437,7 @@ body {
 }
 
 .card {
-    background: var(--light-bg);
+    background: var(--secondary-color);
     border-radius: 10px;
     padding: 2.5rem;
     box-shadow: 0 5px 20px rgba(21, 19, 63, 0.08);
@@ -310,7 +509,7 @@ body {
 
 .contact-section {
     padding: 80px 0;
-    background: var(--light-bg);
+    background: var(--secondary-color);
 }
 
 .contact-form {
@@ -398,6 +597,17 @@ body {
     }
 }
 
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 @keyframes fadeInLeft {
     from {
         opacity: 0;
@@ -466,6 +676,9 @@ body {
     }
 
     .about-section,
+    .gallery-section,
+    .team-section,
+    .services-section,
     .mission-vision,
     .contact-section {
         padding: 60px 0;
@@ -473,6 +686,12 @@ body {
 
     .card {
         padding: 2rem;
+    }
+
+    .gallery-grid,
+    .team-grid,
+    .services-grid {
+        grid-template-columns: 1fr;
     }
 }
 
@@ -492,5 +711,13 @@ body {
 
     .container {
         padding: 0 15px;
+    }
+
+    .nav-menu {
+        gap: 0.5rem;
+    }
+
+    .nav-link {
+        font-size: 0.85rem;
     }
 }
