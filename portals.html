@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 50px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .portals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .portal-button {
+            background: white;
+            border: none;
+            border-radius: 12px;
+            padding: 40px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            min-height: 280px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portal-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .portal-button:hover::before {
+            left: 100%;
+        }
+
+        .portal-button:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+        }
+
+        .portal-button:active {
+            transform: translateY(-5px);
+        }
+
+        .portal-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+
+        .portal-button h2 {
+            font-size: 1.5rem;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .portal-button p {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        /* Color variations for each portal */
+        .policy-portal {
+            border-left: 5px solid #667eea;
+        }
+
+        .policy-portal:hover {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), transparent);
+        }
+
+        .forms-portal {
+            border-left: 5px solid #f093fb;
+        }
+
+        .forms-portal:hover {
+            background: linear-gradient(135deg, rgba(240, 147, 251, 0.1), transparent);
+        }
+
+        .inventory-portal {
+            border-left: 5px solid #4facfe;
+        }
+
+        .inventory-portal:hover {
+            background: linear-gradient(135deg, rgba(79, 172, 254, 0.1), transparent);
+        }
+
+        .support-portal {
+            border-left: 5px solid #43e97b;
+        }
+
+        .support-portal:hover {
+            background: linear-gradient(135deg, rgba(67, 233, 123, 0.1), transparent);
+        }
+
+        .footer {
+            text-align: center;
+            color: white;
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+
+        /* Modal for portal navigation */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+        }
+
+        .modal-content h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .modal-buttons button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background-color: #667eea;
+            color: white;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            background-color: #5568d3;
+        }
+
+        .btn-secondary {
+            background-color: #e0e0e0;
+            color: #333;
+            flex: 1;
+        }
+
+        .btn-secondary:hover {
+            background-color: #d0d0d0;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .portals-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .portal-button {
+                padding: 30px 15px;
+                min-height: 220px;
+            }
+
+            .portal-icon {
+                font-size: 2.5rem;
+            }
+
+            .portal-button h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Portal Dashboard</h1>
+            <p>Access all your organization portals from one place</p>
+        </div>
+
+        <div class="portals-grid">
+            <button class="portal-button policy-portal" onclick="openPortal('Policy Portal', 'Access and manage organizational policies')">
+                <div class="portal-icon">📋</div>
+                <h2>POLICY PORTAL</h2>
+                <p>Access and manage organizational policies</p>
+            </button>
+
+            <button class="portal-button forms-portal" onclick="openPortal('Forms Portal', 'Submit and track your forms')">
+                <div class="portal-icon">📝</div>
+                <h2>FORMS PORTAL</h2>
+                <p>Submit and track your forms</p>
+            </button>
+
+            <button class="portal-button inventory-portal" onclick="openPortal('Inventory Portal', 'Manage assets and inventory')">
+                <div class="portal-icon">📦</div>
+                <h2>INVENTORY PORTAL</h2>
+                <p>Manage assets and inventory</p>
+            </button>
+
+            <button class="portal-button support-portal" onclick="openPortal('Support Ticket Portal', 'Create and manage support tickets')">
+                <div class="portal-icon">🎫</div>
+                <h2>SUPPORT TICKET PORTAL</h2>
+                <p>Create and manage support tickets</p>
+            </button>
+        </div>
+
+        <div class="footer">
+            <p>&copy; 2024 JTC Portal System. All rights reserved.</p>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="portalModal" class="modal" onclick="closeModal(event)">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <h2 id="modalTitle"></h2>
+            <p id="modalDescription"></p>
+            <div class="modal-buttons">
+                <button class="btn-primary" onclick="navigateToPortal()">Enter Portal</button>
+                <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPortal = '';
+
+        function openPortal(portalName, description) {
+            currentPortal = portalName;
+            document.getElementById('modalTitle').textContent = portalName;
+            document.getElementById('modalDescription').textContent = description;
+            document.getElementById('portalModal').classList.add('show');
+        }
+
+        function closeModal(event) {
+            // Close if clicking on modal background or close button
+            if (!event || event.target.id === 'portalModal') {
+                document.getElementById('portalModal').classList.remove('show');
+            }
+        }
+
+        function navigateToPortal() {
+            // Replace these URLs with your actual portal URLs
+            const portalUrls = {
+                'Policy Portal': '/policy',
+                'Forms Portal': '/forms',
+                'Inventory Portal': '/inventory',
+                'Support Ticket Portal': '/support'
+            };
+
+            const url = portalUrls[currentPortal];
+            if (url) {
+                window.location.href = url;
+            } else {
+                alert('Portal URL not configured');
+            }
+            closeModal();
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
